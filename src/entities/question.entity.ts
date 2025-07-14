@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import Model from "./model.entity";
+import { Option } from "./options.entity";
 
 @Entity("questions")
 export class Question extends Model {
@@ -7,4 +8,15 @@ export class Question extends Model {
         unique: true,
     })
     question: string;
+
+    @Column({
+        default: "",
+    })
+    questionEn: string;
+
+    @Column()
+    value: number;
+
+    @OneToMany(() => Option, (option) => option.question)
+    options: Option[];
 }
