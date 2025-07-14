@@ -11,6 +11,8 @@ import userRouter from './routes/user.routes';
 import questionRouter from './routes/question.routes';
 import validateEnv from './utils/validateEnv';
 import redisClient from './utils/connectRedis';
+import seedRouter from './routes/seed.routes';
+
 
 AppDataSource.initialize()
   .then(async () => {
@@ -44,6 +46,7 @@ AppDataSource.initialize()
     app.use('/api/auth', authRouter);
     app.use('/api/users', userRouter);
     app.use('/api/questions', questionRouter);
+    app.use('/api/seed', seedRouter);
 
     // HEALTH CHECKER
     app.get('/api/healthChecker', async (_, res: Response) => {
