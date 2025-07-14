@@ -19,5 +19,8 @@ export const findQuestions = async (
     return await questionRepository.find({
         where,
         select,
+        relations:{
+            options: true,
+        }
     });
 }

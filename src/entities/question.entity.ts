@@ -14,6 +14,8 @@ export class Question extends Model {
     })
     questionEn: string;
 
-    @OneToMany(() => Option, (option) => option.question)
+    @OneToMany(() => Option, (option) => option.question,{
+        cascade: true,
+    })
     options: Option[];
 }
