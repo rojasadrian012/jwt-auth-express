@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { seedCbi } from "../data/seed.data"
 import { createQuestionFromSeed } from "../services/seed.service";
-import { seedCbiToQuestionEntity } from "../mappers/question.mapper";
+import { seedCbiToQuestionEntity } from "../mappers/seed.mapper";
 
 export const seedHandler = async (
     req: Request,
