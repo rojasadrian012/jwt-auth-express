@@ -14,9 +14,6 @@ export class Question extends Model {
     })
     questionEn: string;
 
-    @Column()
-    value: number;
-
     @OneToMany(() => Option, (option) => option.question)
     options: Option[];
 }
