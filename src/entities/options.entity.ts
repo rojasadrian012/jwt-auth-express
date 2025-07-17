@@ -10,6 +10,12 @@ export class Option extends Model {
     @Column()
     labelEn: string;
 
+    @Column({
+        type: "int",
+        default: 0
+    })
+    value: number;
+
     @ManyToOne(() => Question, (question) => question.options)
     question: Question
 }

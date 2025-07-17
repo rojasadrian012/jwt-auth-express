@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateQuestionInput, DeleteQuestionInput, GetQuestionInput, UpdateQuestionInput } from "../schemas/question.schema";
+import { CreateQuestionInput } from "../schemas/question.schema";
 import { findUserById } from "../services/user.service";
-import { createQuestion, findQuestions, getQuestion } from "../services/question.service";
-import AppError from "../utils/appError";
+import { createQuestion, findQuestions } from "../services/question.service";
 import { createQuestionInputToQuestionEntity } from "../mappers/question.mapper";
+import { UserResponseInput } from "../schemas/userResponse.schema";
+import { createUserQuestionResponse, createUserQuestionResponses } from "../services/userQuestion.service";
+import { userResponseInputToUserQuestionResponse } from "../mappers/userQuestionResponse.mapper";
 
 
 export const createQuestionHandler = async (
@@ -54,6 +56,41 @@ export const getQuestionsHandler = async (
         next(err);
     }
 }
+
+export const createUserQuestionHandler = async (
+    req: Request<{}, {}, UserResponseInput>, 
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await findUserById(res.locals.user.id as string);
+        if (!user)
+            throw new Error(`User with ID ${res.locals.user.id} not found`);
+
+        const questions = await findQuestions({}, {});
+
+        if (!questions || questions.length === 0)
+            throw new Error("No questions found");
+
+        const userQuestionResponse = await createUserQuestionResponses(
+            userResponseInputToUserQuestionResponse(
+                req.body,
+                user,
+                questions
+            )
+        )        
+
+        res.status(201).json({
+            status: "success",
+            data: {
+                userQuestionResponse,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+
 
 /*
 export const getQuestionHandler = async (

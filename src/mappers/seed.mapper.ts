@@ -11,6 +11,7 @@ export const seedCbiToQuestionEntity = (seedData: ISeedCbi): DeepPartial<Questio
         options: q.options.map(option => ({
             label: option.label,
             labelEn: option.labelEn,
+            value: option.value
         } as DeepPartial<Option>))
     }))
 }
