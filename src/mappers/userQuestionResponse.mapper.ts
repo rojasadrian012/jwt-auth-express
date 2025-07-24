@@ -26,7 +26,7 @@ export const userResponseInputToUserQuestionResponse = (
         const userQuestionResponse = new UserQuestionResponse();
         userQuestionResponse.user = user;
         userQuestionResponse.question = question;
-        userQuestionResponse.scoreObtained = selectedOption.value
+        userQuestionResponse.option = selectedOption
 
         return userQuestionResponse;
     });

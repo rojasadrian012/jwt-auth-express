@@ -2,6 +2,7 @@ import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import Model from "./model.entity";
 import { User } from "./user.entity";
 import { Question } from "./question.entity";
+import { Option } from "./options.entity";
 
 @Entity("user_question_responses")
 export class UserQuestionResponse extends Model {
@@ -14,9 +15,8 @@ export class UserQuestionResponse extends Model {
     @JoinColumn({ name: "question_id" })
     question: Question;
 
-    @Column({
-        type: "int",
-        default: 0
-    })
-    scoreObtained: number;
+    @ManyToOne(() => Option, { eager: false })
+    @JoinColumn({ name: "option_id" })
+    option: Option;
+
 }
